@@ -94,6 +94,41 @@ http.
 Τα δίκτυα που βρίσκονται στον δρομολογητή Hermes είναι προσβάσιμα σε όλους τους άλλους μόνο σε περίπτωση χρήσης των εργαλείων ping και traceroute.
 
 \subsection*{Λύση}
+Σχετικά με το ζητούμενο 3, θέλουμε τα δίκτυα πίσω από τον Hermes να είναι
+προσβάσιμα από τους άλλους μόνο για τις υπηρεσίες ping και traceroute. Συνεπώς,
+εφαρμόζουμε στα interface Fa6/0, Fa7/0 και Fa8/0 την ACL:
+
+\captionof{listing}{ACL για το γ'}
+\begin{minted}[breaklines=true, frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize, linenos]{bash}
+permit icmp any any
+\end{minted}
+
+Όμως, εάν η ACL έμενε όπως παραπάνω θα υπήρχε το εξής πρόβλημα: Εάν κάποιο
+από τα τερματικά πίσω από τον Hermes ήθελε να έχει πρόσβαση στις υπηρεσίες
+HTTP του διαδικτύου ναι μεν η αίτηση του θα έφτανε στον ContentServer, αλλά
+η απάντηση του Server θα αποριπτόταν από τον δρομολογητή Hermes καθώς επιτρέπει
+μόνο εισερχόμενη κυκλοφορία ICMP. Για να λυθεί αυτό το πρόβλημα, και παράλληλα
+να ισχύει το ζητούμενο 3, στα παραπάνω interface προστέθηκε και το παρακάτω
+φίλτρο στην ACL:
+\captionof{listing}{ACL για το γ' (2)}
+\begin{minted}[breaklines=true, frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize, linenos]{bash}
+permit tcp any any established
+\end{minted}
+Με το παραπάνω επιτρέπονται τα tcp πακέτα προς τα τερματικά πίσω απο τον Hermes,
+αλλά μόνο από επικοινωνία που έχουν ξεκινήσει αυτά τα τερματικά.
+
+Σε ότι αφορά την απόδειξη, στα screenshot της προηγούμενης φαίνεται επιτυχημένο
+http request από τερματικό του Hermes. Τέλος, στα δύο screenshot που ακολουθούν
+φαίνεται επιτυχημένο ping request προς τερματικό του Hermes, καθώς και
+μπλοκαρισμένο πακέτο tcp από επικοινωνία που έχει ξεκινήσει από τερματικό
+εκτός του δικτύου Hermes. To τελευταίο επιτεύχθηκε με την λειτουργία simulation
+του Packet Tracer.
+\begin{center}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{images/third.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{images/third2.png}
+\end{center}
 
 \section{Άσκηση 4η}
 \subsection*{Εκφώνηση}
