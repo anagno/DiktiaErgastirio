@@ -20,8 +20,8 @@
 
 \pagestyle{plain}
 \tableofcontents
-\listoftables
-\listoffigures
+%\listoftables
+%\listoffigures
 %\renewcommand\listoflistingscaption{Κατάλογος πηγαίου κώδικα}
 %\listoflistings
 \newpage
@@ -134,44 +134,59 @@ http request από τερματικό του Hermes. Τέλος, στα δύο 
 \subsection*{Εκφώνηση}
 
 Οι δρομολογητές αξιοποιούν τον αλγόριθμο OSPF για τη διαδικασία της δρομολόγησης. 
-Προς το Διαδίκτυο χρησιμοποιείται στατική δρομολόγηση.
+Προς το Διαδίκτυο χρησιμοποιείται στατική δρομολόγηση. Εμφάνιση screenshots με
+τις εντολές show ip ospf και show ip ospf database.
 
 \subsection*{Λύση}
-
+Σε ότι αφορά το τέταρτο μέρος του παραδοτέου, παρατίθενται screenshots από
+τα αποτελέσματα των ζητούμενων εντολών, καθώς και ο κώδικας για την δυναμική
+δρομολόγηση.
 \captionof{listing}{Οι εντολές για το OSPF στον Hermes}
 \begin{minted}[breaklines=true, frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize, linenos]{bash}
 Hermes(config)# router ospf 500
 Hermes(config-router)# network 172.16.32.0 0.0.31.255 area 0
 Hermes(config-router)# network 172.16.64.0 0.0.31.255 area 0
 Hermes(config-router)# network 172.16.96.0 0.0.31.255 area 0
-Hermes(config-router)# network 172.16.192.0 0.0.0.3 area 0
+Hermes(config-router)# network 10.1.1.4 0.0.0.3 area 0
 Hermes(config-router)# ^Z
-Hermes(config)# ip route 143.233.173.0 255.255.255.252 172.16.192.1
 \end{minted}
+\begin{center}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{images/ipsopf.png}
+\end{center}
+
+\begin{center}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{images/ipospfdb.png}
+\end{center}
 
 \captionof{listing}{Οι εντολές για το OSPF στον Edge}
 \begin{minted}[breaklines=true, frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize, linenos]{bash}
 Edge(config)# router ospf 500
 Edge(config-router)# network 172.16.192.8 0.0.0.3 area 0
 Edge(config-router)# network 172.16.160.0 0.0.31.255 area 0
-Edge(config-router)# network 172.16.192.4 0.0.0.3 area 0
+Edge(config-router)# network 10.1.1.8 0.0.0.3 area 0
 Edge(config-router)# ^Z
-Edge(config)# ip route 143.233.173.0 255.255.255.252 172.16.192.6
 \end{minted}
 
 \captionof{listing}{Οι εντολές για το OSPF στον Bono}
 \begin{minted}[breaklines=true, frame=lines, framesep=2mm, baselinestretch=1.2, fontsize=\footnotesize, linenos]{bash}
 Bono(config)# router ospf 500
 Bono(config-router)# network 172.16.128.0 0.0.31.255 area 0
-Bono(config-router)# network 172.16.192.0 0.0.0.3 area 0
-Bono(config-router)# network 172.16.192.4 0.0.0.3 area 0
+Bono(config-router)# network 10.1.1.8 0.0.0.3 area 0
+Bono(config-router)# network 10.1.1.4 0.0.0.3 area 0
+Edge(config-router)# ^Z
 \end{minted}
 
-\phantomsection \label{Βιβλιογραφία}
-\addcontentsline{toc}{section}{Βιβλιογραφία}
+\section{Διευκρινήσεις}
+Για την προσομοίωση του διαδικτύου χρησιμοποιήθηκε ένας isp δρομολογητής
+και ένας εξυπηρετητής. Επίσης, εφαρμόστηκε overloaded NAT έτσι ώστε όλες οι ιδιωτικές
+διευθύνσεις να μεταφράζονται στην δημόσια διεύθυνση που αντιστοιχεί στο
+interface Fa8/0 του δρομολογητή Bono πριν βγουν προς το διαδίκτυο. Αυτό επετεύχθη με την χρήση της ip access list NAT. Τέλος, ορίστηκε σαν default διαδρομή
+το interface Fa8/0 του Bono.
+%\phantomsection \label{Βιβλιογραφία}
+%\addcontentsline{toc}{section}{Βιβλιογραφία}
 %\mtcaddchapter[Βιβλιογραφία] % Λόγω του minitoc
-\bibliographystyle{plain}
-\bibliography{references}
+%\bibliographystyle{plain}
+%\bibliography{references}
 
 \newpage
 
