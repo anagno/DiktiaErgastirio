@@ -62,9 +62,72 @@
 Screenshot της τοπολογίας.
 
 \subsection*{Λύση}
+
+\begin{table}
+\begin{center}
+  \begin{tabular}{|m{2.3cm}|m{2.9cm}|m{3.5cm}|m{3.4cm}|m{3.3cm}|}
+    \hline
+    Subnet & Subnet Address & Subnet Mask & Host Addresses & BroadCast Address \\ \hline
+  SubnetA & 172.16.160.0 & 255.255.224.0 & 172.16.160.1 - 172.16.191.254 & 172.16.191.255 \\ \hline
+  SubnetB & 172.16.32.0 & 255.255.224.0 & 172.16.32.1 - 172.16.63.254 & 172.16.63.255 \\ \hline
+  SubnetC & 172.16.64.0 & 255.255.224.0 & 172.16.64.1 - 172.16.95.254 & 172.16.95.255 \\ \hline
+  SubnetD & 172.16.128.0 & 255.255.224.0 & 172.16.128.1 - 172.16.159.254 & 172.16.159.255 \\ \hline
+  SubnetE & 172.16.96.0 & 255.255.224.0 & 172.16.96.1 - 172.16.127.254 & 172.16.127.255 \\ \hline
+  SubnetF & 172.16.192.8 & 255.255.255.252 & 172.16.192.9 - 172.16.192.10 & 172.16.192.11 \\ \hline
+  SubnetSer1 & 10.1.1.4 & 255.255.255.252 & 10.1.1.5 - 10.1.1.6 & 10.1.1.7 \\ \hline
+  SubnetSer2 & 10.1.1.8 & 255.255.255.252 & 10.1.1.9 - 10.1.1.10 & 10.1.1.11 \\ \hline
+  SubnetInt & 143.233.173.0 & 255.255.255.252 & 143.233.173.1 - 143.233.173.2 & 143.233.173.3 \\ \hline
+  
+  \end{tabular}
+\caption{Ο πίνακας των υποδικτύων του δικτύου.}
+\label{table:VLSM_subnetting}
+\end{center}
+\end{table}
+
+\begin{table}
+\begin{minipage}{\textwidth} 
+\begin{center}
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Device & Interface & IP Address & Subnet Mask & Default Gateway \\ \hline
+    \multirow{4}{*}{Hermes} &  Fa8/0 & 172.16.32.1 & 255.255.224.0 & - \\ \cline{2-5}
+                            &  Fa7/0 & 172.16.64.1 & 255.255.224.0 & - \\ \cline{2-5}
+                            &  Fa6/0 & 172.16.96.1 & 255.255.224.0 & - \\ \cline{2-5}
+                            &  Ser5/0 & 10.1.1.5 & 255.255.255.252 & - \\ \hline
+
+    \multirow{4}{*}{Bono}   &  Fa9/0 & 172.16.128.1 & 255.255.224.0 & - \\ \cline{2-5}
+                            &  Fa8/0 & 143.233.173.2 & 255.255.255.252 & - \\ \cline{2-5}
+                            &  Ser4/0 & 10.1.1.6 & 255.255.255.252 & - \\ \cline{2-5}
+                            &  Ser5/0 & 10.1.1.9 & 255.255.255.252 & - \\ \hline
+
+    \multirow{4}{*}{Edge}   &  Fa7/0 & 172.16.160.1 & 255.255.224.0 & - \\ \cline{2-5}
+                            &  Fa8/0 & 172.16.192.9 & 255.255.255.252 & - \\ \cline{2-5}
+                            &  Ser6/0 & 10.1.1.10 & 255.255.255.252 & - \\  \hline
+
+    PCA & Eth & 172.16.160.2 & 255.255.224.0 & 172.16.191.1 \\ \hline
+    PCB & Eth & 172.16.32.2 & 255.255.224.0 & 172.16.32.1 \\ \hline
+    PCC & Eth & 172.16.64.2 & 255.255.224.0 & 172.16.64.1 \\ \hline
+    PCD & Eth & 172.16.128.2 & 255.255.224.0 & 172.16.128.1 \\ \hline
+    PCE & Eth & 172.16.96.2 & 255.255.224.0 & 172.16.96.1 \\ \hline
+    PCF & Eth & 172.16.192.10 & 255.255.255.252 & 172.16.192.9 \\ \hline
+  \end{tabular}
+\caption{Ο πίνακας των ip διευθύνσεων του δικτύου.}
+\label{table:VLSM_ip}
+\end{center}
+\end{minipage}
+\end{table}
+
+Η υλοποίηση στο \en{Cisco Packet Tracer} φαίνεται στο σχήμα \ref{fig:cisco}.
+
+\begin{figure}
+\begin{center}
 \begin{center}
 \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{images/topology.png}
 \end{center}
+\caption{Η υλοποίηση του δικτύου στο \en{Cisco Packet Tracer}}
+\label{fig:cisco}
+\end{center}
+\end{figure}
 
 \section{Άσκηση 2η}
 \subsection*{Εκφώνηση}
